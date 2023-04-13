@@ -35,6 +35,8 @@ interface ContextProps {
   setUserChats: Dispatch<SetStateAction<Chat[]>>;
   chatMessages: Message[];
   setChatMessages: Dispatch<SetStateAction<Message[]>>;
+  openAIKey: string;
+  setOpenAIKey: Dispatch<SetStateAction<string>>;
 }
 
 const GlobalContext = createContext<ContextProps>({
@@ -50,6 +52,8 @@ const GlobalContext = createContext<ContextProps>({
   setUserChats: (): Chat[] => [],
   chatMessages: [],
   setChatMessages: (): Message[] => [],
+  openAIKey: '',
+  setOpenAIKey: (): string => '',
 });
 
 export const GlobalContextProvider = ({ children }: any) => {
@@ -61,6 +65,7 @@ export const GlobalContextProvider = ({ children }: any) => {
     undefined
   );
   const [chatMessages, setChatMessages] = useState<Message[]>([]);
+  const [openAIKey, setOpenAIKey] = useState<string>('');
 
   return (
     <GlobalContext.Provider
@@ -77,6 +82,8 @@ export const GlobalContextProvider = ({ children }: any) => {
         setCurrentChatId,
         chatMessages,
         setChatMessages,
+        openAIKey,
+        setOpenAIKey,
       }}
     >
       {children}

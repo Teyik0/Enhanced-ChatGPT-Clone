@@ -105,7 +105,11 @@ const SideBar = () => {
     userId,
     userChats,
     setUserChats,
+    openAIKey,
+    setOpenAIKey,
   } = useGlobalContext();
+
+  const { data: session, status } = useSession();
 
   const optionStyle = `bg-[#262626] text-white`;
 
@@ -127,7 +131,7 @@ const SideBar = () => {
       className='hidden sm:flex sm:flex-col 
       p-2 h-screen sm:w-[260px] bg-[#202022]'
     >
-      <NewChatButton />
+      {status === 'authenticated' && <NewChatButton />}
       <LogButton />
 
       <select
@@ -158,7 +162,23 @@ const SideBar = () => {
         />
       </div>
 
-      <div className='mt-8 flex flex-col-reverse'>
+      <div className='w-full flex justify-center'>
+        <div
+          className='flex items-center border p-2 pl-4 border-gray-900/50 text-white
+        bg-gray-700 rounded-md lg:w-[47rem] w-full'
+        >
+          <textarea
+            placeholder='OPENAI API KEY GOES HERE'
+            value={openAIKey}
+            onChange={(e) => setOpenAIKey(e.target.value)}
+            rows={1}
+            className='m-0 w-full resize-none border-0 bg-transparent p-0 pl-2 pr-7 
+            focus:ring-0 focus-visible:ring-0 dark:bg-transparent md:pl-0 text-xs'
+          />
+        </div>
+      </div>
+
+      <div className='mt-8 flex flex-col-reverse overflow-auto scrollbar-hide'>
         {userChats &&
           userChats.map((chat: any) => (
             <Chat key={chat.id} uniqueId={chat.id} chatName={chat.name} />

@@ -10,14 +10,22 @@ export async function postMessage(
   text: string,
   author: string,
   model: string,
-  temperature: number
+  temperature: number,
+  openAIKey: string
 ) {
   const message = await fetch(`/api/messages`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ chatId, text, author, model, temperature }),
+    body: JSON.stringify({
+      chatId,
+      text,
+      author,
+      model,
+      temperature,
+      openAIKey,
+    }),
   });
   return message.json();
 }

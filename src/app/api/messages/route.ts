@@ -1,11 +1,5 @@
 import { NextResponse } from 'next/server';
-import { Configuration, OpenAIApi } from 'openai';
 import prisma from '../../../prisma/client';
-
-const config = new Configuration({
-  apiKey: process.env.OPENAI_API_KEY,
-});
-export const openai = new OpenAIApi(config);
 
 type Message = {
   chatId: number;
@@ -13,6 +7,7 @@ type Message = {
   author: string;
   model: string;
   temperature: number;
+  openAIKey: string;
 };
 
 export async function POST(request: Request) {
@@ -34,24 +29,36 @@ export async function POST(request: Request) {
 
   let iaResp;
   if (messageParam.model === 'text-davinci-003') {
-    iaResp = await openai
-      .createCompletion({
-        model: `${messageParam.model}`,
+    iaResp = await fetch('https://api.openai.com/v1/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${
+          messageParam.openAIKey === ''
+            ? process.env.OPENAI_API_KEY
+            : messageParam.openAIKey
+        }`,
+      },
+      body: JSON.stringify({
+        model: messageParam.model,
         prompt: messageParam.text,
-        temperature: messageParam.temperature,
         max_tokens: 1000,
-      })
-      .then((resp) => resp.data.choices[0].text)
-      .catch(
-        (err) =>
-          `The IA was unable to answer your question !\n (Error: ${err.message})`
-      );
+        temperature: messageParam.temperature,
+      }),
+    })
+      .then((resp) => resp.json())
+      .catch((err) => console.log(err));
+    iaResp = iaResp.choices[0].text;
   } else if (!messageParam.model.includes('davinci')) {
     iaResp = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
+        Authorization: `Bearer ${
+          messageParam.openAIKey === ''
+            ? process.env.OPENAI_API_KEY
+            : messageParam.openAIKey
+        }`,
       },
       body: JSON.stringify({
         model: messageParam.model,
