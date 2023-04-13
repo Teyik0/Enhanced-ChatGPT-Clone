@@ -6,10 +6,11 @@ import {
   ArrowCircleLeftIcon,
   PlusCircleIcon,
   UserIcon,
+  TrashIcon,
 } from '@heroicons/react/outline';
 import { useGlobalContext } from '@/context/store';
 import { Chat, Loader } from '@/components';
-import { getUserChats, postChat, postUser } from '@/context/fetch';
+import { deleteChat, getUserChats, postChat, postUser } from '@/context/fetch';
 import { toast } from 'react-hot-toast';
 
 const NewChatButton = () => {
@@ -96,6 +97,38 @@ const LogButton = () => {
   );
 };
 
+const DeleteAllChatButton = () => {
+  const [loading, setLoading] = useState(false);
+  const { userChats, setUserChats } = useGlobalContext();
+  const deleteAllChat = () => {
+    userChats.forEach((chat) => {
+      setLoading(true);
+      deleteChat(chat.id)
+        .then((res) => {
+          setLoading(false);
+          setUserChats((prev) => prev.filter((c) => c.id !== chat.id));
+          // console.log('res', res);
+          toast.success('Chat deleted');
+        })
+        .catch((err) => {
+          setLoading(false);
+          console.log('err', err);
+        });
+    });
+  };
+  return (
+    <button
+      className='flex py-3 px-3 items-center gap-3 rounded-md hover:bg-gray-500/10 transition-colors duration-200 
+    text-white cursor-pointer text-sm mb-2 flex-shrink-0 border border-white/20 w-full h-fit'
+      onClick={deleteAllChat}
+    >
+      <TrashIcon className='h-5 w-5 text-white' />
+      <span className='mr-auto'>Clear conversations</span>
+      {loading && <Loader size='little' />}
+    </button>
+  );
+};
+
 const SideBar = () => {
   const {
     setModel,
@@ -161,6 +194,8 @@ const SideBar = () => {
           defaultValue={temperature}
         />
       </div>
+
+      <DeleteAllChatButton />
 
       <div className='w-full flex justify-center'>
         <div
