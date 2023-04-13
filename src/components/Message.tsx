@@ -23,11 +23,11 @@ const Message = ({ message }: MessageProps) => {
             text.split('\n').map((line: string, index: number) => {
               if (line === '')
                 return (
-                  <div key={createdAt}>
+                  <div key={index}>
                     <br />
                   </div>
                 );
-              else return <p key={line}>{line}</p>;
+              else return <p key={line + index}>{line}</p>;
             })}
         </div>
       </div>

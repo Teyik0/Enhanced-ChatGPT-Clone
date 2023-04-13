@@ -1,4 +1,5 @@
 import NextAuth, { type NextAuthOptions } from 'next-auth';
+import { JWT } from 'next-auth/jwt';
 import GoogleProvider from 'next-auth/providers/google';
 
 export const authOptions: NextAuthOptions = {
@@ -10,6 +11,17 @@ export const authOptions: NextAuthOptions = {
       checks: ['none'],
     }),
   ],
+  secret: process.env.NEXTAUTH_SECRET!,
+  // session: {
+  //   strategy: 'jwt',
+  //   maxAge: 30 * 24 * 60 * 60, // 30 days
+  // },
+  // jwt: {
+  //   secret: process.env.JWT_SECRET!,
+  //   // maxAge: 60 * 60 * 24 * 30,
+  //   // async encode({ secret, token, maxAge }) {},
+  //   // async decode({ secret, token }) {},
+  // },
 };
 
 const handler = NextAuth(authOptions);

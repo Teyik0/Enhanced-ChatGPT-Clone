@@ -5,7 +5,7 @@ import { useGlobalContext } from '@/context/store';
 import { useEffect } from 'react';
 
 export default function Home() {
-  const { chatMessages, setChatMessages, currentChatId } = useGlobalContext();
+  const { chatMessages } = useGlobalContext();
   useEffect(() => {
     var myDiv = document.getElementById('chat');
     myDiv!.scrollTo({
@@ -22,7 +22,7 @@ export default function Home() {
       >
         {chatMessages.length > 0 &&
           chatMessages.map((message) => (
-            <Message message={message} key={message.id} />
+            <Message message={message} key={message.id + message.text} />
           ))}
       </div>
       <PromptInput />
