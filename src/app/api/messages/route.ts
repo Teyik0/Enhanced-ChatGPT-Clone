@@ -32,18 +32,38 @@ export async function POST(request: Request) {
     throw new Error('Error creating message');
   }
 
-  const iaResp = await openai
-    .createCompletion({
-      model: `${messageParam.model}`,
-      prompt: messageParam.text,
-      temperature: messageParam.temperature,
-      max_tokens: 1000,
+  let iaResp;
+  if (messageParam.model === 'text-davinci-003') {
+    iaResp = await openai
+      .createCompletion({
+        model: `${messageParam.model}`,
+        prompt: messageParam.text,
+        temperature: messageParam.temperature,
+        max_tokens: 1000,
+      })
+      .then((resp) => resp.data.choices[0].text)
+      .catch(
+        (err) =>
+          `The IA was unable to answer your question !\n (Error: ${err.message})`
+      );
+  } else if (!messageParam.model.includes('davinci')) {
+    iaResp = await fetch('https://api.openai.com/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
+      },
+      body: JSON.stringify({
+        model: messageParam.model,
+        messages: [{ role: 'user', content: messageParam.text }],
+        max_tokens: 1000,
+        temperature: messageParam.temperature,
+      }),
     })
-    .then((resp) => resp.data.choices[0].text)
-    .catch(
-      (err) =>
-        `The IA was unable to answer your question !\n (Error: ${err.message})`
-    );
+      .then((resp) => resp.json())
+      .catch((err) => console.log(err));
+    iaResp = iaResp.choices[0].message.content;
+  }
 
   try {
     const iaMessage = await prisma.message.create({

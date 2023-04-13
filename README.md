@@ -21,7 +21,4 @@ Here are the key you need :
 
 Then, run the following command :
 
-```bash
-
-PS : I tried to push this project in production, but it does'nt work. (I don't know why :sob: )
-```
+To try this out in prod go to : https://enhanced-gpt.netlify.app/

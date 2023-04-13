@@ -11,7 +11,6 @@ export const authOptions: NextAuthOptions = {
       checks: ['none'],
     }),
   ],
-  // secret: process.env.NEXTAUTH_SECRET!,
 };
 
 const handler = NextAuth(authOptions);

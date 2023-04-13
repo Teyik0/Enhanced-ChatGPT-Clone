@@ -138,10 +138,8 @@ const SideBar = () => {
         onChange={(e) => setModel(e.target.value)}
         defaultValue={model}
       >
-        <option className={optionStyle}>text-davinci-003</option>
         <option className={optionStyle}>gpt-3.5-turbo</option>
-        <option className={optionStyle}>code-davinci-002</option>
-        <option className={optionStyle}>text-davinci-002</option>
+        <option className={optionStyle}>text-davinci-003</option>
       </select>
 
       <div
