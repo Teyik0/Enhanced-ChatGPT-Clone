@@ -20,3 +20,6 @@ Here are the key you need :
 - DATABASE_URL="your_key"
 
 To try this out in prod go to : https://enhanced-gpt.netlify.app/
+
+
+PS: If the the chat is enable to answer, you have to put your own openai key to make it work
