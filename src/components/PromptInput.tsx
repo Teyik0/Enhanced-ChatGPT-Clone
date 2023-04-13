@@ -9,7 +9,7 @@ import { postMessage } from '@/context/fetch';
 
 const PromptInput = () => {
   const [prompt, setPrompt] = useState('');
-  const { currentChatId, model, temperature, setChatMessages } =
+  const { currentChatId, model, temperature, setChatMessages, openAIKey } =
     useGlobalContext();
   const [loading, setLoading] = useState(false);
   const { data: session } = useSession();
@@ -32,7 +32,8 @@ const PromptInput = () => {
         prompt,
         session!.user!.name!,
         model,
-        temperature
+        temperature,
+        openAIKey
       )
         .then((res) => {
           console.log('res', res);
