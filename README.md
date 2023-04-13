@@ -1,4 +1,4 @@
-## The NextJS13 Enhanced ChatGPT project, using the new app directory and the new api route feature !
+## The NextJS13 Enhanced ChatGPT project, using the new app directory and the new api route feature and a database powered with prisma !
 
 ![Enhanced-CHAT-GPT](https://user-images.githubusercontent.com/103841897/225119662-ef5efe80-e9ee-4345-909c-b1fc2e7bbdc1.png)
 
@@ -7,15 +7,21 @@
 To run this project, use yarn or npm to install the package. Then, add a .env.local file with the necessary variable you need :
 
 - An openAI key
-- Several Google firebase key
+- Google client id and secret key
 
 Here are the key you need :
 
-- NEXTAUTH_URL = http://localhost:3000
-- NEXTAUTH_SECRET = 1234567890
-- NEXT_PUBLIC_OPEN_API_KEY = **\***
-- NEXT_PUBLIC_GOOGLE_ID = \*\*\*
-- NEXT_PUBLIC_GOOGLE_SECRET = \*\*\*
-- NEXT_PUBLIC_GOOGLE_CREDENTIAL = \*\*\*\*
+- GOOGLE_CLIENT_ID="your_key"
+- GOOGLE_CLIENT_SECRET="your_key"
+- OPENAI_API_KEY="your_key"
+- NEXTAUTH_SECRET="your_key"
+- JWT_SECRET="your_key"
+- NEXTAUTH_URL="your_key"
+- DATABASE_URL="your_key"
+
+Then, run the following command :
+
+```bash
 
 PS : I tried to push this project in production, but it does'nt work. (I don't know why :sob: )
+```

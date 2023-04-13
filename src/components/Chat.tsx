@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { ChatIcon, TrashIcon, PencilAltIcon } from '@heroicons/react/outline';
 import { toast } from 'react-hot-toast';
 import { useGlobalContext } from '@/context/store';
-import Loader from './Loader';
+import { Loader } from '@/components';
 import { deleteChat, getChatMessages } from '@/context/fetch';
 
 interface ChatProps {
