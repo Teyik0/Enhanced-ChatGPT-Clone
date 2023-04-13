@@ -53,9 +53,12 @@ const LogButton = () => {
   const handleClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
     setLoading(true);
     if (status === 'authenticated') {
-      await signOut();
+      await signOut({
+        callbackUrl: process.env.NEXTAUTH_URL!,
+        redirect: false,
+      });
     } else {
-      await signIn('google');
+      await signIn('google', { callbackUrl: process.env.NEXTAUTH_URL! });
     }
     setLoading(false);
   };

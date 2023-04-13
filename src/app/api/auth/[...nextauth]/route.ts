@@ -12,16 +12,6 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   secret: process.env.NEXTAUTH_SECRET!,
-  // session: {
-  //   strategy: 'jwt',
-  //   maxAge: 30 * 24 * 60 * 60, // 30 days
-  // },
-  // jwt: {
-  //   secret: process.env.JWT_SECRET!,
-  //   // maxAge: 60 * 60 * 24 * 30,
-  //   // async encode({ secret, token, maxAge }) {},
-  //   // async decode({ secret, token }) {},
-  // },
 };
 
 const handler = NextAuth(authOptions);
