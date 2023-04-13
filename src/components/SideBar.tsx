@@ -14,7 +14,7 @@ import { toast } from 'react-hot-toast';
 
 const NewChatButton = () => {
   const [loading, setLoading] = useState(false);
-  const { setCurrentChatId, currentChatId, userId, setUserChats } =
+  const { setCurrentChatId, userId, setUserChats, setChatMessages } =
     useGlobalContext();
   const newChat = async (e: React.MouseEvent<HTMLButtonElement>) => {
     setLoading(true);
@@ -24,6 +24,7 @@ const NewChatButton = () => {
         // console.log('res', res);
         toast.success('Chat created');
         setUserChats((prev) => [...prev, res.chat]);
+        setChatMessages([]);
         setCurrentChatId(res.chat.id);
       })
       .catch((err) => {
@@ -58,7 +59,7 @@ const LogButton = () => {
         redirect: false,
       });
     } else {
-      await signIn('google', { callbackUrl: process.env.NEXTAUTH_URL! });
+      await signIn('google');
     }
     setLoading(false);
   };
