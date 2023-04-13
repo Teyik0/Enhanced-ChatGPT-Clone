@@ -15,7 +15,7 @@ export default function Home() {
   }, [chatMessages]);
 
   return (
-    <main className='relative flex flex-1 flex-col h-screen bg-[#343441] pb-[60px]'>
+    <main className='relative flex flex-1 flex-col min-h-[90vh] sm:h-screen bg-[#343441] pb-[60px]'>
       <div
         className='flex flex-col py-2 overflow-y-auto overflow-x-hidden'
         id='chat'

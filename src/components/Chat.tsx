@@ -39,11 +39,13 @@ const Chat = ({ uniqueId, chatName }: ChatProps) => {
     setLoading(true);
     deleteChat(uniqueId)
       .then((res) => {
-        const newChats = userChats.filter((chat) => chat.id !== uniqueId);
-        setCurrentChatId(undefined);
-        setUserChats(newChats);
+        if (currentChatId === uniqueId) {
+          setCurrentChatId(undefined);
+          setChatMessages([]);
+        }
+        const updatedChats = userChats.filter((chat) => chat.id !== uniqueId);
+        setUserChats(updatedChats);
         toast.success('Chat deleted');
-        console.log('res', res);
         setLoading(false);
       })
       .catch((err) => {

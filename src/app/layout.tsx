@@ -20,7 +20,7 @@ export default async function RootLayout({
       <body>
         <SessionProvider session={session!}>
           <GlobalContextProvider>
-            <div className='flex'>
+            <div className='sm:flex'>
               <SideBar />
               {children}
             </div>
