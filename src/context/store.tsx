@@ -37,6 +37,8 @@ interface ContextProps {
   setChatMessages: Dispatch<SetStateAction<Message[]>>;
   openAIKey: string;
   setOpenAIKey: Dispatch<SetStateAction<string>>;
+  toggleMenu: boolean;
+  setToggleMenu: Dispatch<SetStateAction<boolean>>;
 }
 
 const GlobalContext = createContext<ContextProps>({
@@ -54,6 +56,8 @@ const GlobalContext = createContext<ContextProps>({
   setChatMessages: (): Message[] => [],
   openAIKey: '',
   setOpenAIKey: (): string => '',
+  toggleMenu: false,
+  setToggleMenu: (): boolean => false,
 });
 
 export const GlobalContextProvider = ({ children }: any) => {
@@ -66,6 +70,7 @@ export const GlobalContextProvider = ({ children }: any) => {
   );
   const [chatMessages, setChatMessages] = useState<Message[]>([]);
   const [openAIKey, setOpenAIKey] = useState<string>('');
+  const [toggleMenu, setToggleMenu] = useState<boolean>(false);
 
   return (
     <GlobalContext.Provider
@@ -84,6 +89,8 @@ export const GlobalContextProvider = ({ children }: any) => {
         setChatMessages,
         openAIKey,
         setOpenAIKey,
+        toggleMenu,
+        setToggleMenu,
       }}
     >
       {children}

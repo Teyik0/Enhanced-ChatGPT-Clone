@@ -64,10 +64,7 @@ const LogButton = () => {
   const handleClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
     setLoading(true);
     if (status === 'authenticated') {
-      await signOut({
-        callbackUrl: process.env.NEXTAUTH_URL!,
-        redirect: false,
-      });
+      await signOut();
     } else {
       await signIn('google');
     }
@@ -90,7 +87,7 @@ const LogButton = () => {
   return (
     <button
       className='flex py-3 px-3 items-center gap-3 rounded-md hover:bg-gray-500/10 transition-colors duration-200 
-        text-white cursor-pointer text-sm mb-2 flex-shrink-0 border border-white/20 w-full h-fit'
+        text-white cursor-pointer text-sm flex-shrink-0 border border-white/20 w-full h-fit'
       onClick={handleClick}
     >
       {status === 'authenticated' ? (
@@ -160,10 +157,11 @@ const SideBar = () => {
     openAIKey,
     setOpenAIKey,
     currentChatId,
+    toggleMenu,
+    setToggleMenu,
   } = useGlobalContext();
 
   const [chatName, setChatName] = useState('No chat selected');
-  const [toggleMenu, setToggleMenu] = useState(false);
   const { data: session, status } = useSession();
 
   const optionStyle = `bg-[#262626] text-white`;
@@ -202,8 +200,8 @@ const SideBar = () => {
         <LogButton />
 
         <select
-          className='flex bg-transparent py-3 px-3 items-center gap-3 rounded-md hover:bg-gray-500/10 transition-colors duration-200 
-      text-white cursor-pointer text-sm mb-2 flex-shrink-0 border border-white/20 w-full h-fit focus:outline-none'
+          className='mt-2 flex bg-transparent py-3 px-3 items-center gap-3 rounded-md hover:bg-gray-500/10 transition-colors duration-200 
+        text-white cursor-pointer text-sm mb-2 flex-shrink-0 border border-white/20 w-full h-fit focus:outline-none'
           name='Chat model'
           id='model-selector'
           onChange={(e) => setModel(e.target.value)}
@@ -261,8 +259,16 @@ const SideBar = () => {
             className='h-8 w-8 text-white cursor-pointer'
             onClick={() => setToggleMenu(!toggleMenu)}
           />
-          <h1 className='font-bold text-white'>{chatName}</h1>
-          <NewChatButton />
+          {status === 'authenticated' && (
+            <h1 className='font-bold text-white'>{chatName}</h1>
+          )}
+          {status === 'authenticated' ? (
+            <NewChatButton />
+          ) : (
+            <div className='w-[260px]'>
+              <LogButton />
+            </div>
+          )}
         </div>
         <div className='h-px w-full bg-white' />
         {toggleMenu && (
@@ -272,7 +278,7 @@ const SideBar = () => {
             </div>
 
             <select
-              className='flex bg-transparent py-3 px-3 items-center gap-3 rounded-md hover:bg-gray-500/10 transition-colors duration-200 
+              className='mt-2 flex bg-transparent py-3 px-3 items-center gap-3 rounded-md hover:bg-gray-500/10 transition-colors duration-200 
             text-white cursor-pointer text-sm mb-2 flex-shrink-0 border border-white/20 w-full h-fit focus:outline-none'
               name='Chat model'
               id='model-selector'
@@ -317,7 +323,7 @@ const SideBar = () => {
               </div>
             </div>
 
-            <div className='mt-8 flex flex-col-reverse overflow-auto scrollbar-hide'>
+            <div className='mt-6 pt-2 flex flex-col-reverse overflow-auto scrollbar-hide max-h-[30vh]'>
               {userChats &&
                 userChats.map((chat: any) => (
                   <Chat key={chat.id} uniqueId={chat.id} chatName={chat.name} />

@@ -21,11 +21,12 @@ const Chat = ({ uniqueId, chatName }: ChatProps) => {
     setUserChats,
     userChats,
     setChatMessages,
-    chatMessages,
+    setToggleMenu,
   } = useGlobalContext();
 
   const selectChat = () => {
     setCurrentChatId(uniqueId);
+    setToggleMenu(false);
     getChatMessages(uniqueId)
       .then((messages) => {
         setChatMessages(messages.messages);
