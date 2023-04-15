@@ -8,8 +8,8 @@ export default function Home() {
   const { chatMessages } = useGlobalContext();
   useEffect(() => {
     var myDiv = document.getElementById('chat');
-    myDiv!.scrollTo({
-      top: myDiv!.scrollHeight,
+    myDiv?.scrollTo({
+      top: myDiv?.scrollHeight,
       behavior: 'smooth',
     });
   }, [chatMessages]);
