@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import prisma from '../../../../prisma/client';
+import prisma from '@/context/client';
 
 export async function GET(
   request: Request,
@@ -8,7 +8,7 @@ export async function GET(
   const userId = params.id;
   try {
     const chats = await prisma.chat.findMany({
-      where: { userId: parseInt(userId) },
+      where: { userId: userId },
     });
     return NextResponse.json({ chats });
   } catch (error) {
@@ -24,10 +24,10 @@ export async function DELETE(
   const chatId = params.id;
   try {
     const messages = await prisma.message.deleteMany({
-      where: { chatId: parseInt(chatId) },
+      where: { chatId },
     });
     const chats = await prisma.chat.deleteMany({
-      where: { id: parseInt(chatId) },
+      where: { id: chatId },
     });
     return NextResponse.json({ chats });
   } catch (error) {

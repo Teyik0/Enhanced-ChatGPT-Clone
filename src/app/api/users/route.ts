@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import prisma from '../../../prisma/client';
+import prisma from '../../../context/client';
 
 interface User {
   name: string;

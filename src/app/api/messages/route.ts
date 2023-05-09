@@ -1,8 +1,8 @@
 import { NextResponse } from 'next/server';
-import prisma from '../../../prisma/client';
+import prisma from '../../../context/client';
 
 type Message = {
-  chatId: number;
+  chatId: string;
   text: string;
   author: string;
   model: string;

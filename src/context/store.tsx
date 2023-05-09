@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import {
   createContext,
@@ -6,31 +6,32 @@ import {
   Dispatch,
   SetStateAction,
   useState,
-} from 'react';
+} from "react";
 
 type Chat = {
-  id: number;
+  id: string;
   name: string;
-  userId: number;
+  userId: string;
   createdAt: string;
 };
 
 export type Message = {
-  id: number;
+  id: string;
   text: string;
   createdAt: string;
-  chatId: number;
+  chatId: string;
   author: string;
 };
+
 interface ContextProps {
-  currentChatId: number | undefined;
-  setCurrentChatId: Dispatch<SetStateAction<number | undefined>>;
+  currentChatId: string | undefined;
+  setCurrentChatId: Dispatch<SetStateAction<string | undefined>>;
   model: string;
   setModel: Dispatch<SetStateAction<string>>;
   temperature: number;
   setTemperature: Dispatch<SetStateAction<number>>;
-  userId: number;
-  setUserId: Dispatch<SetStateAction<number>>;
+  userId: string;
+  setUserId: Dispatch<SetStateAction<string>>;
   userChats: Chat[];
   setUserChats: Dispatch<SetStateAction<Chat[]>>;
   chatMessages: Message[];
@@ -42,34 +43,34 @@ interface ContextProps {
 }
 
 const GlobalContext = createContext<ContextProps>({
-  currentChatId: 0,
+  currentChatId: "",
   setCurrentChatId: (): number | undefined => undefined,
-  model: '',
-  setModel: (): string => '',
+  model: "",
+  setModel: (): string => "",
   temperature: 0,
   setTemperature: (): number => 0,
-  userId: 0,
+  userId: "",
   setUserId: (): number => 0,
   userChats: [],
   setUserChats: (): Chat[] => [],
   chatMessages: [],
   setChatMessages: (): Message[] => [],
-  openAIKey: '',
-  setOpenAIKey: (): string => '',
+  openAIKey: "",
+  setOpenAIKey: (): string => "",
   toggleMenu: false,
   setToggleMenu: (): boolean => false,
 });
 
 export const GlobalContextProvider = ({ children }: any) => {
-  const [model, setModel] = useState<string>('text-davinci-003');
+  const [model, setModel] = useState<string>("text-davinci-003");
   const [temperature, setTemperature] = useState<number>(0.7);
-  const [userId, setUserId] = useState<number>(0);
+  const [userId, setUserId] = useState<string>("");
   const [userChats, setUserChats] = useState<Chat[]>([]);
-  const [currentChatId, setCurrentChatId] = useState<number | undefined>(
+  const [currentChatId, setCurrentChatId] = useState<string | undefined>(
     undefined
   );
   const [chatMessages, setChatMessages] = useState<Message[]>([]);
-  const [openAIKey, setOpenAIKey] = useState<string>('');
+  const [openAIKey, setOpenAIKey] = useState<string>("");
   const [toggleMenu, setToggleMenu] = useState<boolean>(false);
 
   return (
