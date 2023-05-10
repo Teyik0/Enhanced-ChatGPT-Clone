@@ -1,12 +1,12 @@
 import { Session } from 'next-auth';
 
-export async function getChatMessages(chatId: number) {
-  const messages = await fetch(`/api/messages/${chatId}}`);
+export async function getChatMessages(chatId: string) {
+  const messages = await fetch(`/api/messages/${chatId}`);
   return messages.json();
 }
 
 export async function postMessage(
-  chatId: number,
+  chatId: string,
   text: string,
   author: string,
   model: string,
@@ -30,12 +30,12 @@ export async function postMessage(
   return message.json();
 }
 
-export async function getUserChats(userId: number) {
+export async function getUserChats(userId: string) {
   const chats = await fetch(`/api/chats/${userId}`);
   return chats.json();
 }
 
-export async function postChat(userId: number) {
+export async function postChat(userId: string) {
   const chat = await fetch(`/api/chats`, {
     method: 'POST',
     headers: {
@@ -46,7 +46,7 @@ export async function postChat(userId: number) {
   return chat.json();
 }
 
-export async function deleteChat(chatId: number) {
+export async function deleteChat(chatId: string) {
   const chat = await fetch(`/api/chats/${chatId}`, {
     method: 'DELETE',
   });

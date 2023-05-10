@@ -1,12 +1,12 @@
-import './globals.css';
-import { getServerSession } from 'next-auth';
-import { authOptions } from './api/auth/[...nextauth]/route';
-import { GlobalContextProvider } from '@/context/store';
-import { SideBar, SessionProvider } from '@/components';
+import "./globals.css";
+import { getServerSession } from "next-auth";
+import { authOptions } from "./api/auth/[...nextauth]/route";
+import { SideBar, SessionProvider } from "@/components";
+import { Providers } from "@/context/store";
 
 export const metadata = {
-  title: 'Enhanced CHAT-GPT',
-  description: 'Enhanced CHAT-GPT',
+  title: "Enhanced CHAT-GPT",
+  description: "Enhanced CHAT-GPT",
 };
 
 export default async function RootLayout({
@@ -16,15 +16,15 @@ export default async function RootLayout({
 }) {
   const session = await getServerSession(authOptions);
   return (
-    <html lang='fr'>
+    <html lang="fr">
       <body>
         <SessionProvider session={session!}>
-          <GlobalContextProvider>
-            <div className='sm:flex'>
+          <Providers>
+            <div className="sm:flex">
               <SideBar />
               {children}
             </div>
-          </GlobalContextProvider>
+          </Providers>
         </SessionProvider>
       </body>
     </html>

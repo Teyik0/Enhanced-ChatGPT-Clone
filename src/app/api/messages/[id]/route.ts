@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import prisma from '../../../../prisma/client';
+import prisma from '../../../../context/client';
 
 export async function GET(
   request: Request,
@@ -8,7 +8,7 @@ export async function GET(
   const chatId = params.id;
   try {
     const messages = await prisma.message.findMany({
-      where: { chatId: parseInt(chatId) },
+      where: { chatId },
     });
     return NextResponse.json({ messages });
   } catch (error) {
