@@ -2,9 +2,15 @@
 import { useState } from "react";
 import { ChatIcon, TrashIcon, PencilAltIcon } from "@heroicons/react/outline";
 import { toast } from "react-hot-toast";
-import { useGlobalContext } from "@/context/store";
 import { Loader } from "@/components";
 import { deleteChat, getChatMessages } from "@/context/fetch";
+import { useAtom } from "jotai/react";
+import {
+  chatMessagesAtom,
+  currentChatIdAtom,
+  toggleMenuAtom,
+  userChatsAtom,
+} from "@/context/store";
 
 interface ChatProps {
   uniqueId: string;
@@ -15,14 +21,11 @@ const Chat = ({ uniqueId, chatName }: ChatProps) => {
   const [modifyChatName, setModifyChatName] = useState(false);
   const [loading, setLoading] = useState(false);
   const [newChatName, setNewChatName] = useState(chatName);
-  const {
-    currentChatId,
-    setCurrentChatId,
-    setUserChats,
-    userChats,
-    setChatMessages,
-    setToggleMenu,
-  } = useGlobalContext();
+
+  const [currentChatId, setCurrentChatId] = useAtom(currentChatIdAtom);
+  const [userChats, setUserChats] = useAtom(userChatsAtom);
+  const [, setChatMessages] = useAtom(chatMessagesAtom);
+  const [, setToggleMenu] = useAtom(toggleMenuAtom);
 
   const selectChat = () => {
     setCurrentChatId(uniqueId);

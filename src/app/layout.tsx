@@ -1,8 +1,8 @@
 import "./globals.css";
 import { getServerSession } from "next-auth";
 import { authOptions } from "./api/auth/[...nextauth]/route";
-import { GlobalContextProvider } from "@/context/store";
 import { SideBar, SessionProvider } from "@/components";
+import { Providers } from "@/context/store";
 
 export const metadata = {
   title: "Enhanced CHAT-GPT",
@@ -19,12 +19,12 @@ export default async function RootLayout({
     <html lang="fr">
       <body>
         <SessionProvider session={session!}>
-          <GlobalContextProvider>
+          <Providers>
             <div className="sm:flex">
               <SideBar />
               {children}
             </div>
-          </GlobalContextProvider>
+          </Providers>
         </SessionProvider>
       </body>
     </html>

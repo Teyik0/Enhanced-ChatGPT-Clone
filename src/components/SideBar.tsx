@@ -9,15 +9,30 @@ import {
   TrashIcon,
 } from "@heroicons/react/outline";
 import { CgMenuGridO } from "react-icons/cg";
-import { useGlobalContext } from "@/context/store";
-import { Chat, Loader } from "@/components";
+import Chat from "@/components/Chat";
+import Loader from "@/components/Loader";
 import { deleteChat, getUserChats, postChat, postUser } from "@/context/fetch";
 import { toast } from "react-hot-toast";
+import { useAtom } from "jotai";
+import {
+  chatMessagesAtom,
+  currentChatIdAtom,
+  modelAtom,
+  openAIKeyAtom,
+  temperatureAtom,
+  toggleMenuAtom,
+  userChatsAtom,
+  userIdAtom,
+} from "@/context/store";
 
 const NewChatButton = () => {
   const [loading, setLoading] = useState(false);
-  const { setCurrentChatId, userId, setUserChats, setChatMessages } =
-    useGlobalContext();
+
+  const [, setCurrentChatId] = useAtom(currentChatIdAtom);
+  const [userId] = useAtom(userIdAtom);
+  const [, setUserChats] = useAtom(userChatsAtom);
+  const [, setChatMessages] = useAtom(chatMessagesAtom);
+
   const newChat = async (e: React.MouseEvent<HTMLButtonElement>) => {
     setLoading(true);
     postChat(userId)
@@ -58,9 +73,9 @@ const NewChatButton = () => {
 
 const LogButton = () => {
   const [loading, setLoading] = useState(false);
-  const { data: session, status } = useSession();
-  const { setUserId } = useGlobalContext();
 
+  const { data: session, status } = useSession();
+  const [, setUserId] = useAtom(userIdAtom);
   const handleClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
     setLoading(true);
     if (status === "authenticated") {
@@ -105,13 +120,12 @@ const LogButton = () => {
 
 const DeleteAllChatButton = () => {
   const [loading, setLoading] = useState(false);
-  const {
-    userChats,
-    setUserChats,
-    currentChatId,
-    setCurrentChatId,
-    setChatMessages,
-  } = useGlobalContext();
+
+  const [userChats, setUserChats] = useAtom(userChatsAtom);
+  const [currentChatId, setCurrentChatId] = useAtom(currentChatIdAtom);
+  const [userId] = useAtom(userIdAtom);
+  const [, setChatMessages] = useAtom(chatMessagesAtom);
+
   const deleteAllChat = () => {
     userChats.forEach((chat) => {
       setLoading(true);
@@ -146,20 +160,13 @@ const DeleteAllChatButton = () => {
 };
 
 const SideBar = () => {
-  const {
-    setModel,
-    model,
-    temperature,
-    setTemperature,
-    userId,
-    userChats,
-    setUserChats,
-    openAIKey,
-    setOpenAIKey,
-    currentChatId,
-    toggleMenu,
-    setToggleMenu,
-  } = useGlobalContext();
+  const [model, setModel] = useAtom(modelAtom);
+  const [temperature, setTemperature] = useAtom(temperatureAtom);
+  const [openAIKey, setOpenAIKey] = useAtom(openAIKeyAtom);
+  const [userId] = useAtom(userIdAtom);
+  const [userChats, setUserChats] = useAtom(userChatsAtom);
+  const [currentChatId] = useAtom(currentChatIdAtom);
+  const [toggleMenu, setToggleMenu] = useAtom(toggleMenuAtom);
 
   const [chatName, setChatName] = useState("No chat selected");
   const { data: session, status } = useSession();

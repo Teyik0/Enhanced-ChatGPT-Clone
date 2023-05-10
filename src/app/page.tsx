@@ -1,11 +1,13 @@
 "use client";
 
 import { PromptInput, Message } from "@/components";
-import { useGlobalContext } from "@/context/store";
 import { useEffect } from "react";
+import { useAtom } from "jotai/react";
+import { chatMessagesAtom } from "@/context/store";
 
 export default function Home() {
-  const { chatMessages } = useGlobalContext();
+  const [chatMessages] = useAtom(chatMessagesAtom);
+
   useEffect(() => {
     var myDiv = document.getElementById("chat");
     myDiv?.scrollTo({

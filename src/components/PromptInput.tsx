@@ -3,14 +3,26 @@
 import { useState } from "react";
 import { useSession } from "next-auth/react";
 import { Toaster, toast } from "react-hot-toast";
-import { useGlobalContext } from "@/context/store";
 import { Loader } from "@/components";
 import { postMessage } from "@/context/fetch";
+import { useAtom } from "jotai/react";
+import {
+  chatMessagesAtom,
+  currentChatIdAtom,
+  modelAtom,
+  openAIKeyAtom,
+  temperatureAtom,
+} from "@/context/store";
 
 const PromptInput = () => {
   const [prompt, setPrompt] = useState("");
-  const { currentChatId, model, temperature, setChatMessages, openAIKey } =
-    useGlobalContext();
+
+  const [currentChatId] = useAtom(currentChatIdAtom);
+  const [model] = useAtom(modelAtom);
+  const [temperature] = useAtom(temperatureAtom);
+  const [, setChatMessages] = useAtom(chatMessagesAtom);
+  const [openAIKey] = useAtom(openAIKeyAtom);
+
   const [loading, setLoading] = useState(false);
   const { data: session, status } = useSession();
 
