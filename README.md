@@ -19,7 +19,7 @@ Here are the key you need :
 - NEXTAUTH_URL="your_key"
 - DATABASE_URL="your_key"
 
-To try this out in prod go to : https://enhanced-gpt.netlify.app/](https://enhanced-chat-gpt-clone.vercel.app/)
+To try this out in prod go to : https://enhanced-chat-gpt-clone.vercel.app/
 
 
 PS: If the the chat is enable to answer, you have to put your own openai key to make it work
